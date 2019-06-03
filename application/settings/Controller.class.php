@@ -1,15 +1,19 @@
 <?php 
-
-class Controller 
+class Controller
 {
-
-	private function loadView($view, $data = []) 
+	public function getLanguage()
 	{
-		extract($data);
-		include_once 'application/views/' . $view . '.php';
+		$lang = new Language();
+		return $lang->getTranslation();
 	}
 
-	public function loadTemplate($view, $data = [])
+	private function loadView($view = '', $data = []) 
+	{
+		extract($data);
+		include_once "application/views/{$view}.php";
+	}
+
+	public function loadTemplate($view = '', $data = [])
 	{
 		$this->loadView('default/header', $data);
 		$this->loadView("pages/{$view}", $data);
@@ -18,7 +22,8 @@ class Controller
 
 	public function error404() 
 	{
-		$this->loadTemplate('404');
+		$data['error'] = $this->getLanguage()->PAGES->NOTFOUND;
+		$this->loadTemplate('404', $data);
 	}
-	
+
 }

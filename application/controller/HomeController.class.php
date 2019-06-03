@@ -5,7 +5,8 @@ class HomeController extends Controller
 	
 	public function index() 
 	{
-		$this->loadTemplate('home');
+		$data['homepage'] = $this->getLanguage()->PAGES->HOMEPAGE;
+		$this->loadTemplate('home', $data);
 	}
 
 }

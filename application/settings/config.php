@@ -3,6 +3,7 @@
 /* Basic configurations */
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+define("language", "pt-br");
 define('url', 'http://localhost/mvc/');
 date_default_timezone_set('America/Sao_Paulo');
 
