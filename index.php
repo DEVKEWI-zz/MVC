@@ -1,30 +1,30 @@
 <?php 
-include_once 'application/settings/config.php';
-spl_autoload_register(function ($class)
-{
+include_once 'settings/config.php';
+
+spl_autoload_register(function ($class) {
+	$applications = [
+		/* Default Folderes */
+			'settings/routers/',
+			'application/controllers/',
+			'settings/api/',
+			'application/models/'
+	];
 	$extensions = [
-		'.php',
+		/* File Extension*/
 		'.class.php',
+		'.php',
 		'.interface.php'
 	];
-	$applications = [
-		'application/settings/',
-		'application/controller/',
-		'application/model/',
-		'application/views/'
-	];
 	foreach ($applications as $folder) {
-		if (file_exists("{$folder}{$class}" . $extensions[0])) {
-			include_once "{$folder}{$class}" . $extensions[0];
-		}
-		if (file_exists("{$folder}{$class}" . $extensions[1])) {
-			include_once "{$folder}{$class}" . $extensions[1];
-		}
-		if (file_exists("{$folder}{$class}" . $extensions[2])) {
-			include_once "{$folder}{$class}" . $extensions[2];
-		}
+		loadFile($extensions, "{$folder}{$class}");
 	}
 });
+function loadFile($extensions = [], $path = '') {
+	foreach ($extensions as $extension) {
+		if (!empty($path . $extension) && file_exists($path . $extension)) {
+			return include_once $path . $extension;
+		}
+	}
+}
 $rm = new RouterManager();
 $rm->run();
-?>
